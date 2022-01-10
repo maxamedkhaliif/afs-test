@@ -1,60 +1,11 @@
-# afs-test
+## Assignment 1 : table row
+The data array of TableData object has been extracted from the getData(), so to be in the global scoop and accessible for any fucntion. 
+The totalRow() is set to create a total object that their properties will be updated with the sum of the other row, and finally to be pushed to the data array and displayed in the table of home component. 
 
-## Details
+## Assignment 2 : Async/Await
+Decouple the inside the mounthed() into multiple functions using Async/await approach instead of Promise chaining.
+Refactore the getData() to change the state of loading property, then the map() is used to clone every item in the data array and generate a random number with Math.random() for the data.randomNumber property.
+The async parseData() returns a promise object,
+the function calls the getData() and parse the updated data to the tableData property to be passed then to the template and lastly it updates the loading property to false.
 
-This is a Vue 2 project with TS using these libraries for component setup:
-```vue-class-component```
-```vue-property-decorator```
-
-## Assignments
-
-### table row
-On the "Home" page is a table, add a row to this table that displays the totals of the other rows.
-
-### Async/Await
-In the mounted function the data for the table is being fetched, edited and placed in the tableData property with a promise chain. 
-Rewrite this function but instead of chaining promises use async/await to do the exact same. 
-
-### Add a security class
-On the home page create a button that opens a modal window that contains a form. This form should allow you to add a security class to the table, also updating the totals.
-
-### Transfer search
-On the Transfers page you find a list of financial transfers with a search bar. Make the transferlist searchable by "recordDate".
-
-### Style the transferRow.vue component
-Rework the style for this component, using this design. Make it look as close as possible.
-https://i.pinimg.com/736x/29/bc/e5/29bce59f6cdf71eb840d939ba05deff1--best-ui-design-app-ui-design.jpg 
-If you for whatever reason do not have a similar result to the image, please let us know when you send in the work.
-
-### Fix the update transfers button
-Something is going wrong with this button, fix it and explain why it broke in the comments.
-
-To hand in the project, please create a repository and invite mvanloon@afsgroup.nl and sarissen@afsgroup.nl.
-Good luck!
-
-## Notes
-Do not use the included buefy UI components for your assignments.
-
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Assignment 3 : Add a security class

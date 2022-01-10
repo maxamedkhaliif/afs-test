@@ -112,28 +112,23 @@ export default class Home extends Vue {
     //Invoke totalRow() and pass the updated data array
     this.totalRow(this.data);
 
-    this.getData(this.data)
-      .then((data: TableData[]) => {
-        this.loading = true;
-        return data.map((dataItem: TableData) => {
-          return {
-            ...dataItem,
-            randomNumber: Math.random(),
-          };
-        });
-      })
-      .then((data: TableData[]) => {
-        this.tableData = data;
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.log(error, "This is not good");
-      });
+    this.parseData();
   }
 
-  //Update getData() to return the passed data array
+  //Parse the updated data to tableData
+  async parseData(): Promise<void> {
+    this.tableData = await this.getData(this.data);
+    this.loading = false
+  }
+
+  //Update getData() to map and manipulate the data array
   async getData(data: TableData[]): Promise<TableData[]> {
-    return data;
+      this.loading = true;
+      return data.map((dataItem: TableData) => {
+        return {...dataItem,
+        randomNumber: Math.random(),
+        }
+      })
   }
 }
 </script>

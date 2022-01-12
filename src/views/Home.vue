@@ -1,15 +1,23 @@
 <template>
   <div class="home">
     <h1>This is a table with some important data</h1>
+    <button type="button" class="btn" @click="showModal">Add Security Class</button>
     <b-table :data="tableData" :columns="columns"></b-table>
+    <Form v-show="isModalVisible" style="display: block" @close="closeModal" @add-security-class="addSecurityClass" @update-total="updateTotal" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { TableData } from "@/types/types";
+import Button from '../components/Button.vue';
+import Form from '../components/Form.vue';
 
-@Component
+@Component({
+  components: {
+    Form
+  }
+})
 export default class Home extends Vue {
   tableData: TableData[] = [];
   columns = [
@@ -39,7 +47,7 @@ export default class Home extends Vue {
    * Extract the data array from the getData function
    * to be accessible from the file scoop
    */
-  data = [
+  dataArray = [
     {
       id: "42f2462d-49d0-4e91-8fe1-de2e656b0f06",
       name: "Series A",
@@ -78,15 +86,17 @@ export default class Home extends Vue {
     },
   ];
 
+  //Booleans
   loading = false;
+  isModalVisible = false;
 
   /**
-  * totalRow() retrieves the data array and adds
+  * totalRow() retrieves the dataArray array and adds
   * the total of the other rows
   */
-  totalRow(data: TableData[]): void {
+  totalRow(table: TableData[]): void {
     // Create total object
-    var total = {
+    var Total = {
       id: `${(Math.random()*100000).toString()}`,
       name: "Total",
       nominalValue: 0,
@@ -96,39 +106,60 @@ export default class Home extends Vue {
       issuedCapital: 0,
     };
 
-    //Sum each row to the total object
-    data.forEach(dataItem => {
-      total.authorizedAmount += dataItem.authorizedAmount;
-      total.issuedAmount += dataItem.issuedAmount;
-      total.authorizedCapital += dataItem.authorizedCapital;
-      total.issuedCapital += dataItem.issuedCapital;
+    //Sum each row to the Total object
+    table.forEach(tableItem => {
+      Total.authorizedAmount += tableItem.authorizedAmount;
+      Total.issuedAmount += tableItem.issuedAmount;
+      Total.authorizedCapital += tableItem.authorizedCapital;
+      Total.issuedCapital += tableItem.issuedCapital;
     });
 
-    //update data array
-    data.push(total);
+    //update dataArray table
+    table.push(Total);
   }
 
-  mounted(): void {
-    //Invoke totalRow() and pass the updated data array
-    this.totalRow(this.data);
+  async mounted(): Promise<void> {
+    //Invoke totalRow() and pass the updated dataArray array
+    this.totalRow(this.dataArray);
 
-    this.parseData();
+    return await this.parseDataArray();
   }
 
-  //Parse the updated data to tableData
-  async parseData(): Promise<void> {
-    this.tableData = await this.getData(this.data);
+  //Parse the updated dataArray to tableData
+  async parseDataArray(): Promise<void> {
+    this.tableData = await this.getDataArray(this.dataArray);
     this.loading = false
   }
 
-  //Update getData() to map and manipulate the data array
-  async getData(data: TableData[]): Promise<TableData[]> {
+  //Update getDataArray() to map and manipulate the dataArray array
+  async getDataArray(dataArray: TableData[]): Promise<TableData[]> {
       this.loading = true;
-      return data.map((dataItem: TableData) => {
-        return {...dataItem,
+      return dataArray.map((dataArrayItem: TableData) => {
+        return {...dataArrayItem,
         randomNumber: Math.random(),
         }
       })
+  }
+  
+  //Push newly added security class to the data array and update it
+  addSecurityClass(newClass: TableData): TableData[] {
+    this.tableData.pop();
+    return this.tableData = [...this.tableData, newClass]
+  }
+
+  //Update total after each table input
+  updateTotal() {
+    this.totalRow(this.tableData);
+  }
+
+  //Open modal
+  showModal(): boolean {
+    return this.isModalVisible = true;
+  }
+
+  //Close modal
+  closeModal(): boolean {
+    return this.isModalVisible = false;
   }
 }
 </script>

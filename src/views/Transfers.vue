@@ -37,7 +37,8 @@ export default class Transfers extends Vue {
       const searchArray: Transaction[] = [];
       this.transfers.forEach((transfer: Transaction) => {
         if (
-          transfer.type.toLowerCase().includes(this.searchTerms.toLowerCase())
+          transfer.type.toLowerCase().includes(this.searchTerms.toLowerCase()) || 
+          transfer.recordDate.includes(this.searchTerms)
         ) {
           searchArray.push(transfer);
         }

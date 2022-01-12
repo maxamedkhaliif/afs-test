@@ -11,4 +11,7 @@ the function calls the getData() and parse the updated data to the tableData pro
 ## Assignment 3 : Add a security class
 Implement a Modal component that allows the user to add a security class to the table. To pass input data from the Form to Home component, the Vuex approache was on the table since an empty store was already implemented, but I used the $emit way since the data was already in top app component. The $emit lifts the data and triggers the addSecurityClass() component to push the input into the tableData and pass then to be rendred, then comes the updateTotal() to update the total row.
 
-## Assignment 4 : 
+## Assignment 4 : Transfer search
+Add an recordDate constrainte to the getter searchedTransfers() so it could include the recordDate the search.
+
+## Assignment 5 : Style the transferRow.vue component
